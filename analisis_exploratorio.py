@@ -22,3 +22,12 @@ def contar_subeventos(df_eventos: pd.DataFrame) -> pd.Series:
     nombres = df_eventos["subEventName"].dropna().astype(str).str.strip()
     nombres = nombres[nombres.ne("")]
     return nombres.value_counts().sort_index()
+
+def contar_eventos(df_eventos: pd.DataFrame) -> pd.Series:
+    """Devuelve el número de registros de cada tipo de evento."""
+    if "eventName" not in df_eventos.columns:
+        raise KeyError("El dataframe no contiene la columna 'eventName'.")
+
+    nombres = df_eventos["eventName"].dropna().astype(str).str.strip()
+    nombres = nombres[nombres.ne("")]
+    return nombres.value_counts().sort_index()
