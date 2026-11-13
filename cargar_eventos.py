@@ -53,3 +53,18 @@ def cargar_jugadores(ruta: Path) -> pd.DataFrame:
         if isinstance(role, dict) else "Sin posición"
     )
     return df_jugadores
+
+
+def cargar_equipos(ruta: Path) -> pd.DataFrame:
+    """Carga y devuelve el dataframe completo del catálogo de equipos."""
+    if not ruta.exists():
+        raise FileNotFoundError(f"No se encontró el catálogo de jugadores: {ruta}")
+
+    with ruta.open("r", encoding="utf-8") as archivo:
+        equipos = json.load(archivo)
+
+    df_equipos = pd.DataFrame(equipos)
+    if "wyId" not in df_equipos.columns:
+        raise ValueError("El catálogo de equipos no contiene la columna 'wyId'.")
+
+    return df_equipos
